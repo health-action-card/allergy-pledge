@@ -1,0 +1,17 @@
+{
+  "name": "알레르기 예방 행동수칙",
+  "short_name": "행동수칙",
+  "description": "알레르기 예방 행동수칙 카드를 만들고 매일 실천을 기록하는 앱",
+  "lang": "ko",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#13324A",
+  "theme_color": "#13324A",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
