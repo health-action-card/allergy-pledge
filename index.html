@@ -2,103 +2,134 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-visual">
-  <meta name="theme-color" content="#2e7d6b">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>알레르기 예방 행동수칙</title>
+  <meta name="theme-color" content="#13324A">
   <meta name="mobile-web-app-capable" content="yes">
-  <title>건강 행동수칙 실천 앱</title>
-
+  <meta name="apple-mobile-web-app-capable" content="yes">
   <link rel="manifest" href="manifest.json">
-  <link rel="icon" href="icon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="icon" type="image/png" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Jua&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div id="app">
 
-    <!-- ========== 1. 메인 화면 (수칙 선택) ========== -->
+    <!-- ============ 1. 메인 화면 (수칙 선택) ============ -->
     <section id="screen-main" class="screen active">
-      <header class="top">
-        <h1>🌿 알레르기 예방 <span>건강 행동수칙</span> 만들기</h1>
-        <div class="name-row">
-          <label for="studentName">내 이름</label>
-          <input id="studentName" type="text" maxlength="10" placeholder="이름을 써 주세요" autocomplete="off">
-          <p id="greeting" class="greeting"></p>
+      <header class="main-head">
+        <div class="main-titles">
+          <h1 class="main-title">나만의 알레르기 예방 행동수칙</h1>
+          <p class="main-sub" id="subtitle">이름을 쓰고, 지키고 싶은 수칙을 골라 보세요</p>
+        </div>
+        <div class="name-field" id="name-field">
+          <label for="name-input">내 이름</label>
+          <input id="name-input" type="text" maxlength="10" autocomplete="off"
+                 autocapitalize="off" spellcheck="false" enterkeyhint="done"
+                 placeholder="이름 쓰기">
         </div>
       </header>
 
-      <main id="categories" class="categories"><!-- app.js가 3개 카테고리 버튼을 생성 --></main>
+      <!-- 카테고리 버튼은 app.js의 CATEGORIES 데이터로 자동 생성됩니다 -->
+      <main class="cats" id="cats" aria-label="수칙 카테고리"></main>
 
-      <footer class="bottom">
-        <button id="btnMakeCard" class="btn btn-gold btn-xl">🏅 나만의 행동수칙 카드 만들기</button>
-      </footer>
+      <div class="cta-row">
+        <button id="btn-make" class="btn-make" type="button">나만의 행동수칙 카드 만들기</button>
+      </div>
     </section>
 
-    <!-- ========== 3·4. 카드 화면 ========== -->
+    <!-- ============ 3·4. 행동수칙 카드 + 실천 체크 ============ -->
     <section id="screen-card" class="screen">
       <div class="card-layout">
 
         <div class="card-col">
-          <div class="card-stage">
-            <div id="certificate" class="cert">
+          <div class="cert-stage" id="cert-stage">
+
+            <!-- 상장 / 수료증 스타일 카드 (html2canvas 캡처 대상) -->
+            <div class="cert" id="certificate">
               <div class="cert-frame">
-                <div class="cert-head">
-                  <div class="cert-ribbon">알레르기 예방 관리</div>
-                  <h2>실 천 증 서</h2>
-                </div>
-                <p id="certPledge" class="cert-pledge"></p>
-                <div id="certColumns" class="cert-columns"></div>
-                <div class="cert-foot">
-                  <div id="certDate" class="cert-date"></div>
-                  <div class="cert-sign">약속한 사람 <b id="certName"></b> (서명)</div>
-                  <div class="cert-seal">건강<br>지킴이</div>
+                <div class="cert-inner">
+                  <i class="cert-line"></i>
+                  <i class="corner tl"></i><i class="corner tr"></i>
+                  <i class="corner bl"></i><i class="corner br"></i>
+
+                  <div class="cert-eyebrow">알레르기 예방 관리 수업을 마치며</div>
+                  <h2 class="cert-title">행동수칙 약속 증서</h2>
+                  <div class="cert-orn"><span></span><b></b><span></span></div>
+
+                  <p class="cert-text" id="cert-text"></p>
+
+                  <div class="cert-rules" id="cert-rules"></div>
+
+                  <div class="cert-foot">
+                    <div class="cert-date" id="cert-date"></div>
+                    <div class="cert-sign">
+                      <span>약속한 사람</span>
+                      <strong id="cert-sign-name"></strong>
+                      <em class="seal">약속</em>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
+
           </div>
+
           <div class="card-actions">
-            <button id="btnBack" class="btn btn-ghost">← 수칙 다시 고르기</button>
-            <button id="btnSave" class="btn btn-primary">💾 태블릿에 카드 저장</button>
+            <button id="btn-back" class="btn btn-ghost" type="button">← 수칙 다시 고르기</button>
+            <button id="btn-save" class="btn btn-gold" type="button">태블릿에 카드 저장</button>
           </div>
         </div>
 
-        <aside class="side">
-          <h3>📅 오늘의 실천</h3>
-          <p id="todayText" class="today-text"></p>
-          <label class="check-big">
-            <input type="checkbox" id="doneCheck">
-            <span>오늘의 실천 완료!</span>
+        <aside class="side-panel">
+          <h2 class="side-title">오늘의 실천</h2>
+          <p class="side-msg" id="side-msg">카드에 쓴 약속을 오늘 지켰나요?</p>
+
+          <label class="big-check" id="done-label">
+            <input type="checkbox" id="done-check">
+            <span class="box"></span>
+            <span class="big-check-text">오늘의 실천 완료</span>
           </label>
-          <button id="btnSend" class="btn btn-gold">📮 선생님께 보내기</button>
-          <p id="sendStatus" class="send-status" aria-live="polite"></p>
+
+          <button id="btn-send" class="btn btn-send" type="button">선생님께 보내기</button>
+          <p class="side-hint">보내기를 누르면 날짜, 이름, 고른 수칙이 선생님께 전달돼요.</p>
         </aside>
 
       </div>
     </section>
+  </div>
 
-    <!-- ========== 2. 카테고리 모달 ========== -->
-    <div id="modal" class="modal-backdrop" hidden>
-      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-        <div class="modal-head">
-          <span id="modalIcon" class="modal-icon"></span>
-          <h2 id="modalTitle"></h2>
-        </div>
-        <p id="modalHint" class="modal-hint"></p>
-        <ul id="ruleList" class="rule-list"></ul>
-        <div class="add-row">
-          <input id="customInput" type="text" maxlength="40" placeholder="나만의 수칙 추가하기" autocomplete="off">
-          <button id="btnAddCustom" class="btn btn-sub">추가</button>
-        </div>
-        <p id="addMsg" class="add-msg" aria-live="polite"></p>
-        <button id="btnModalDone" class="btn btn-primary btn-wide">선택 완료</button>
+  <!-- ============ 2. 카테고리 모달 ============ -->
+  <div class="modal" id="modal" hidden>
+    <div class="dialog" id="dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="dialog-head">
+        <span class="dialog-emoji" id="modal-emoji" aria-hidden="true"></span>
+        <h2 class="dialog-title" id="modal-title"></h2>
+        <span class="dialog-count" id="modal-count"></span>
+      </div>
+
+      <ul class="rule-list" id="rule-list"></ul>
+
+      <div class="add-row">
+        <input id="add-input" type="text" maxlength="30" autocomplete="off" spellcheck="false"
+               enterkeyhint="done" placeholder="나만의 수칙 추가하기">
+        <button id="add-btn" type="button">추가</button>
+      </div>
+
+      <div class="dialog-foot">
+        <button id="btn-done" class="btn-done" type="button">선택 완료</button>
       </div>
     </div>
+  </div>
 
-    <div id="toast" class="toast" role="status"></div>
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <div id="rotate-guard">
+    <p>태블릿을 가로로 돌려 주세요</p>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
