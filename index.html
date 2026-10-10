@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-visual">
+  <meta name="theme-color" content="#2e7d6b">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>건강 행동수칙 실천 앱</title>
+
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Jua&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+
+    <!-- ========== 1. 메인 화면 (수칙 선택) ========== -->
+    <section id="screen-main" class="screen active">
+      <header class="top">
+        <h1>🌿 알레르기 예방 <span>건강 행동수칙</span> 만들기</h1>
+        <div class="name-row">
+          <label for="studentName">내 이름</label>
+          <input id="studentName" type="text" maxlength="10" placeholder="이름을 써 주세요" autocomplete="off">
+          <p id="greeting" class="greeting"></p>
+        </div>
+      </header>
+
+      <main id="categories" class="categories"><!-- app.js가 3개 카테고리 버튼을 생성 --></main>
+
+      <footer class="bottom">
+        <button id="btnMakeCard" class="btn btn-gold btn-xl">🏅 나만의 행동수칙 카드 만들기</button>
+      </footer>
+    </section>
+
+    <!-- ========== 3·4. 카드 화면 ========== -->
+    <section id="screen-card" class="screen">
+      <div class="card-layout">
+
+        <div class="card-col">
+          <div class="card-stage">
+            <div id="certificate" class="cert">
+              <div class="cert-frame">
+                <div class="cert-head">
+                  <div class="cert-ribbon">알레르기 예방 관리</div>
+                  <h2>실 천 증 서</h2>
+                </div>
+                <p id="certPledge" class="cert-pledge"></p>
+                <div id="certColumns" class="cert-columns"></div>
+                <div class="cert-foot">
+                  <div id="certDate" class="cert-date"></div>
+                  <div class="cert-sign">약속한 사람 <b id="certName"></b> (서명)</div>
+                  <div class="cert-seal">건강<br>지킴이</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-actions">
+            <button id="btnBack" class="btn btn-ghost">← 수칙 다시 고르기</button>
+            <button id="btnSave" class="btn btn-primary">💾 태블릿에 카드 저장</button>
+          </div>
+        </div>
+
+        <aside class="side">
+          <h3>📅 오늘의 실천</h3>
+          <p id="todayText" class="today-text"></p>
+          <label class="check-big">
+            <input type="checkbox" id="doneCheck">
+            <span>오늘의 실천 완료!</span>
+          </label>
+          <button id="btnSend" class="btn btn-gold">📮 선생님께 보내기</button>
+          <p id="sendStatus" class="send-status" aria-live="polite"></p>
+        </aside>
+
+      </div>
+    </section>
+
+    <!-- ========== 2. 카테고리 모달 ========== -->
+    <div id="modal" class="modal-backdrop" hidden>
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-head">
+          <span id="modalIcon" class="modal-icon"></span>
+          <h2 id="modalTitle"></h2>
+        </div>
+        <p id="modalHint" class="modal-hint"></p>
+        <ul id="ruleList" class="rule-list"></ul>
+        <div class="add-row">
+          <input id="customInput" type="text" maxlength="40" placeholder="나만의 수칙 추가하기" autocomplete="off">
+          <button id="btnAddCustom" class="btn btn-sub">추가</button>
+        </div>
+        <p id="addMsg" class="add-msg" aria-live="polite"></p>
+        <button id="btnModalDone" class="btn btn-primary btn-wide">선택 완료</button>
+      </div>
+    </div>
+
+    <div id="toast" class="toast" role="status"></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
